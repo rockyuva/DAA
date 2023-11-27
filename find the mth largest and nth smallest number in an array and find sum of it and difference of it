@@ -1,0 +1,51 @@
+#include <stdio.h>
+void find_mth_largest_and_nth_smallest(int arr[], int size, int m, int n, int *nth_smallest, int *mth_largest, int *sum_result, int *diff_result) {
+    for (int i = 0; i < size - 1; i++) {
+        for (int j = 0; j < size - i - 1; j++) {
+            if (arr[j] > arr[j + 1]) {
+                int temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+            }
+        }
+    }
+    *nth_smallest = arr[n - 1];
+    for (int i = 0; i < size - 1; i++) {
+        for (int j = 0; j < size - i - 1; j++) {
+            if (arr[j] < arr[j + 1]) {
+                int temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+            }
+        }
+    }
+    *mth_largest = arr[m - 1];
+    *sum_result = *nth_smallest + *mth_largest;
+    *diff_result = *nth_smallest - *mth_largest;
+}
+int main() {
+    int size, m_value, n_value;
+    printf("Enter the size of the array: ");
+    scanf("%d", &size);
+    int array[size];
+    printf("Enter the array elements:\n");
+    for (int i = 0; i < size; i++) {
+        scanf("%d", &array[i]);
+    }
+    printf("Enter the value of m: ");
+    scanf("%d", &m_value);
+
+    printf("Enter the value of n: ");
+    scanf("%d", &n_value);
+
+    int nth_smallest, mth_largest, sum_result, diff_result;
+
+    find_mth_largest_and_nth_smallest(array, size, m_value, n_value, &nth_smallest, &mth_largest, &sum_result, &diff_result);
+
+    printf("%dth smallest number: %d\n", n_value, nth_smallest);
+    printf("%dth largest number: %d\n", m_value, mth_largest);
+    printf("Sum: %d\n", sum_result);
+    printf("Difference: %d\n", diff_result);
+
+    return 0;
+}
