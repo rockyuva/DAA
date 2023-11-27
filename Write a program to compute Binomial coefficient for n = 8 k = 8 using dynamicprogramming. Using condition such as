@@ -1,0 +1,28 @@
+#include <stdio.h>
+int binomialCoefficient(int n, int k) {
+    int dp[n + 1][k + 1];
+    for (int i = 0; i <= n; i++) {
+        for (int j = 0; j <= k && j <= i; j++) {
+            if (j == 0 || j == i) {
+                dp[i][j] = 1;
+            } else {
+                dp[i][j] = dp[i - 1][j - 1] + dp[i - 1][j];
+            }
+        }
+    }
+    return dp[n][k];
+}
+int main() {
+    int n, k;
+    printf("Enter the value of n: ");
+    scanf("%d", &n);
+    printf("Enter the value of k: ");
+    scanf("%d", &k);
+    if (k < 0 || k > n) {
+        printf("Invalid value for k.\n");
+        return 1; 
+    }
+    int result = binomialCoefficient(n, k);
+    printf("Binomial coefficient C(%d, %d) is: %d\n", n, k, result);
+    return 0;
+}
