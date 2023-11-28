@@ -1,0 +1,46 @@
+#include <stdio.h>
+
+#define MAX_SIZE 100
+void subsetSumBacktracking(int nums[], int targetSum, int currentIdx, int currentSubset[], int subsetSize, int *resultCount) {
+    if (subsetSize > 0) {
+        int sum = 0;
+        for (int i = 0; i < subsetSize; i++) {
+            sum += currentSubset[i];
+        }
+        if (sum == targetSum) {
+            printf("Subset found: {");
+            for (int i = 0; i < subsetSize; i++) {
+                printf("%d", currentSubset[i]);
+                if (i < subsetSize - 1) {
+                    printf(", ");
+                }
+            }
+            printf("}\n");
+            (*resultCount)++;
+        }
+    }
+    for (int i = currentIdx; i < MAX_SIZE; i++) {
+        currentSubset[subsetSize] = nums[i];
+        subsetSumBacktracking(nums, targetSum, i + 1, currentSubset, subsetSize + 1, resultCount);
+    }
+}
+int main() {
+    int nums[MAX_SIZE];
+    int size, targetSum;
+    printf("Enter the size of the array: ");
+    scanf("%d", &size);
+    printf("Enter %d elements of the array:\n", size);
+    for (int i = 0; i < size; i++) {
+        scanf("%d", &nums[i]);
+    }
+    printf("Enter the target sum: ");
+    scanf("%d", &targetSum);
+    int resultCount = 0;
+    int currentSubset[MAX_SIZE];
+    printf("Subsets with sum %d:\n", targetSum);
+    subsetSumBacktracking(nums, targetSum, 0, currentSubset, 0, &resultCount);
+    if (resultCount == 0) {
+        printf("No subset found with the given sum.\n");
+    }
+    return 0;
+}
