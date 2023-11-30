@@ -1,0 +1,45 @@
+ #include <stdio.h>
+#include <time.h>
+
+long long factorial(int n);
+
+double estimate_time_complexity(int n);
+
+int main() {
+    int number_to_calculate_factorial;
+    
+    // Get input from the user
+    printf("Enter a non-negative integer to calculate its factorial: ");
+    scanf("%d", &number_to_calculate_factorial);
+
+    if (number_to_calculate_factorial < 0) {
+        printf("Please enter a non-negative integer.\n");
+    } else {
+        // Calculate factorial
+        long long result = factorial(number_to_calculate_factorial);
+        printf("The factorial of %d is: %lld\n", number_to_calculate_factorial, result);
+
+        // Estimate time complexity
+        double time_complexity_estimate = estimate_time_complexity(number_to_calculate_factorial);
+        printf("Time complexity estimate: %f seconds\n", time_complexity_estimate);
+    }
+
+    return 0;
+}
+
+long long factorial(int n) {
+    if (n == 0 || n == 1) {
+        return 1;
+    } else {
+        return n * factorial(n - 1);
+    }
+}
+
+double estimate_time_complexity(int n) {
+    clock_t start_time = clock();
+    long long result = factorial(n);
+    clock_t end_time = clock();
+    double elapsed_time = ((double) (end_time - start_time)) / CLOCKS_PER_SEC;
+    return elapsed_time;
+    return 0;
+}
